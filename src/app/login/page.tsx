@@ -17,6 +17,8 @@ const LoginPage = () => {
   const onSubmit = async (data: any) => {
     try {
       setLoading(true);
+      console.log(process.env.NEXT_PUBLIC_API_BASE_URL);
+      
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/login`,
         data
