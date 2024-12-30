@@ -19,7 +19,7 @@ const Dashboard = () => {
           const headers = { Authorization: `Bearer ${token}` };
           try {
             const statsResponse = await axios.get(
-              `${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/stats`,
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tasks/stats`,
               { headers }
             );
             if (statsResponse.data) setStats(statsResponse.data);
@@ -28,10 +28,11 @@ const Dashboard = () => {
           }
           try {
             const priorityResponse = await axios.get(
-              `${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/priority-table`,
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tasks/priority-table`,
               { headers }
             );
-            if (priorityResponse.data.stats) setPriorityStats(priorityResponse.data.stats);
+            if (priorityResponse.data.stats)
+              setPriorityStats(priorityResponse.data.stats);
           } catch (error) {
             console.log("Error fetching priority stats:", error);
           }

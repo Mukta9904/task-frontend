@@ -10,7 +10,6 @@ import { Select, SelectItem } from "@nextui-org/react";
 import Wrapper from "@/components/Wrapper";
 import Logout from "@/components/Logout";
 
-
 interface Task {
   _id: string;
   title: string;
@@ -41,28 +40,28 @@ const Tasks = () => {
     try {
       if (typeof window !== "undefined") {
         const token = localStorage.getItem("token");
-      const headers = { Authorization: `Bearer ${token}` };
+        const headers = { Authorization: `Bearer ${token}` };
 
-      const queryParams = new URLSearchParams();
-      for (const key in appliedFilters) {
-        if (
-          appliedFilters.hasOwnProperty(key) &&
-          appliedFilters[key as keyof Filters]
-        ) {
-          queryParams.append(
-            key,
-            appliedFilters[key as keyof Filters] as string
-          );
+        const queryParams = new URLSearchParams();
+        for (const key in appliedFilters) {
+          if (
+            appliedFilters.hasOwnProperty(key) &&
+            appliedFilters[key as keyof Filters]
+          ) {
+            queryParams.append(
+              key,
+              appliedFilters[key as keyof Filters] as string
+            );
+          }
         }
-      }
-      const query = queryParams.toString();
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/?${query}`,
-        { headers }
-      );
-      if (response.status === 200) {
-        setTasks(response.data);        
-      }  
+        const query = queryParams.toString();
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tasks/?${query}`,
+          { headers }
+        );
+        if (response.status === 200) {
+          setTasks(response.data);
+        }
       }
     } catch (error) {
       console.log("Error fetching tasks:", error);
@@ -79,7 +78,6 @@ const Tasks = () => {
 
     const updatedFilters = { ...filters, [key]: value };
 
-
     Object.keys(updatedFilters).forEach((filterKey: string) => {
       if (!updatedFilters[filterKey as keyof Filters]) {
         delete updatedFilters[filterKey as keyof Filters];
@@ -87,7 +85,7 @@ const Tasks = () => {
     });
 
     setFilters(updatedFilters);
-    fetchTasks(updatedFilters); 
+    fetchTasks(updatedFilters);
   };
 
   const handleIsOpen = () => {
