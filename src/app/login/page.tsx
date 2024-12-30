@@ -1,4 +1,5 @@
 "use client"
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -8,16 +9,22 @@ import { Spacer } from "@nextui-org/react";
 const LoginPage = () => {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm();
-
+  const [loading, setLoading] = useState(false)
   const onSubmit = async (data: any) => {
     try {
+      setLoading(true)
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`, data);
      if(response.status === 200){
-         localStorage.setItem("token", response.data.token);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", response.data.token);
          router.push("/dashboard");
         }
+      }
     } catch (error) {
       console.error("Login failed", error);
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -38,7 +45,7 @@ const LoginPage = () => {
           errorMessage={errors.password?.message?.toString()}
         />
         <Spacer y={1} />
-        <Button type="submit">Login</Button>
+        <Button disabled={loading} type="submit">{loading? "Loading..": "Log In"}</Button>
         <Spacer y={0.5} />
         <p>Don&apos;t have an account?  
         <a href="/signup" className="text-blue-500"> Sign up</a>

@@ -39,7 +39,8 @@ const Tasks = () => {
   // Fetch tasks from backend with filters applied
   const fetchTasks = async (appliedFilters = filters) => {
     try {
-      const token = localStorage.getItem("token");
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("token");
       const headers = { Authorization: `Bearer ${token}` };
 
       const queryParams = new URLSearchParams();
@@ -62,6 +63,7 @@ const Tasks = () => {
       if (response.status === 200) {
         setTasks(response.data);        
       }  
+      }
     } catch (error) {
       console.log("Error fetching tasks:", error);
     }

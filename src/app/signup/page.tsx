@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -10,18 +10,24 @@ import { Spacer } from "@nextui-org/react";
 const SignupPage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const router = useRouter();
-
+  const [loading, setLoading] = useState(false)
   const onSubmit = async (data: any) => {
     try {
+      setLoading(true)
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/register`, data);
-     if(response.status === 200) router.push("/login");
+     if(response.status === 200 && typeof window !== "undefined"){
+        localStorage.setItem("token", response?.data?.token)
+        router.push("/dashboard");
+      }
      if(response.status === 400){
         errors.email = { type: "manual", message: "Email already exists" };
      }
     } catch (error) {
       errors.email = { type: "manual", message: "Email already exists" };
       console.log("Signup failed", error);
-      
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -54,9 +60,11 @@ const SignupPage = () => {
       variant="bordered"
     />
         <Spacer y={1} />
-        <Button type="submit">Signup</Button>
+        <Button disabled={loading} type="submit">{loading? "Loading..": "Sign Up"}</Button>
         <Spacer y={0.5} />
-        <a href="/login" className="text-blue-500">Already have an account? Login</a>
+        <p>Already have an account?
+        <a href="/login" className="text-blue-500"> Login</a>
+        </p>
       </form>
     </div>
   );

@@ -1,22 +1,32 @@
 "use client";
-import React from 'react'
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-const Wrapper = ({children}: {children: React.ReactNode}) => {
-    const router = useRouter();
+const Wrapper = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
-    useEffect(() => {
-     if (!token) {
-            router.push("/login");
-     }
-    },[token , router])
-    if (!token) return null;
-  return (
-    <>
-      {children}
-    </>
-  )
-}
+    if (!token) {
+      setIsAuthenticated(false);
+      router.push("/login");
+    } else {
+      setIsAuthenticated(true);
+    }
+  }, [router]);
 
-export default Wrapper
+  if (isAuthenticated === null) {
+    // Show a loading state while checking the token
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    // Return null if the user is unauthenticated to avoid rendering children prematurely
+    return null;
+  }
+
+  return <>{children}</>;
+};
+
+export default Wrapper;

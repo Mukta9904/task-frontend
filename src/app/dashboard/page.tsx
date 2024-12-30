@@ -6,6 +6,7 @@ import DashboardChart from "@/components/DashboardChart";
 import PriorityTable from "@/components/PriorityTable";
 import Wrapper from "@/components/Wrapper";
 import Logout from "@/components/Logout";
+
 const Dashboard = () => {
   const [stats, setStats] = useState();
   const [priorityStats, setPriorityStats] = useState();
@@ -13,25 +14,27 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const headers = { Authorization: `Bearer ${token}` };
-        try {
-          const statsResponse = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/stats`,
-            { headers }
-          );
-          if (statsResponse.data) setStats(statsResponse.data);
-        } catch (error) {
-          console.log("Error fetching stats:", error);
-        }
-        try {
-          const priorityResponse = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/priority-table`,
-            { headers }
-          );
-          if (priorityResponse.data.stats) setPriorityStats(priorityResponse.data.stats);
-        } catch (error) {
-          console.log("Error fetching priority stats:", error);
+        if (typeof window !== "undefined") {
+          const token = localStorage.getItem("token");
+          const headers = { Authorization: `Bearer ${token}` };
+          try {
+            const statsResponse = await axios.get(
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/stats`,
+              { headers }
+            );
+            if (statsResponse.data) setStats(statsResponse.data);
+          } catch (error) {
+            console.log("Error fetching stats:", error);
+          }
+          try {
+            const priorityResponse = await axios.get(
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/priority-table`,
+              { headers }
+            );
+            if (priorityResponse.data.stats) setPriorityStats(priorityResponse.data.stats);
+          } catch (error) {
+            console.log("Error fetching priority stats:", error);
+          }
         }
       } catch (error) {
         console.log("Error fetching stats:", error);

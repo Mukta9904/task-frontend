@@ -11,14 +11,16 @@ const TaskCard = ({ task }: any) => {
     setIsFormOpen(true);
   }
   const handleDelete = async ()=>{
-    const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/${task._id}`, {
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
+    if (typeof window !== "undefined") {
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/${task._id}`, {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      if(response.status === 200){
+        const newTasks = tasks?.filter((t)=> t._id !== task._id)
+        setTasks(newTasks || []);
       }
-    })
-    if(response.status === 200){
-      const newTasks = tasks?.filter((t)=> t._id !== task._id)
-      setTasks(newTasks || []);
     }
   }
   return (
