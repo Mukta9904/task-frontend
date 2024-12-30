@@ -16,7 +16,7 @@ interface Task {
 const AddTaskForm = () => {
   
   const { currentTask, isFormOpen, setIsFormOpen, tasks, setTasks } = useFormContext();
-  const [isEditing, setIsEditing] = React.useState(currentTask?._id);
+  const [isEditing] = React.useState(currentTask?._id);
   const { handleSubmit, control, watch } = useForm();
   const onSubmit = async (data: Task) => {
    try {

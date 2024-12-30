@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Chart } from "react-chartjs-2";
 import Sidebar from "@/components/Sidebar";
 import DashboardChart from "@/components/DashboardChart";
 import PriorityTable from "@/components/PriorityTable";

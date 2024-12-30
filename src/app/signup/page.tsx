@@ -18,7 +18,7 @@ const SignupPage = () => {
      if(response.status === 400){
         errors.email = { type: "manual", message: "Email already exists" };
      }
-    } catch (error: any) {
+    } catch (error) {
       errors.email = { type: "manual", message: "Email already exists" };
       console.log("Signup failed", error);
       

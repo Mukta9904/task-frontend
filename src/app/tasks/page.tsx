@@ -9,7 +9,7 @@ import { Button } from "@nextui-org/button";
 import { Select, SelectItem } from "@nextui-org/react";
 import Wrapper from "@/components/Wrapper";
 import Logout from "@/components/Logout";
-// import { Input } from "@nextui-org/react"; // For priority input
+
 
 interface Task {
   _id: string;
@@ -67,7 +67,6 @@ const Tasks = () => {
     }
   };
 
-  // Fetch tasks on initial render
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -78,7 +77,7 @@ const Tasks = () => {
 
     const updatedFilters = { ...filters, [key]: value };
 
-    // Remove filters with empty values
+
     Object.keys(updatedFilters).forEach((filterKey: string) => {
       if (!updatedFilters[filterKey as keyof Filters]) {
         delete updatedFilters[filterKey as keyof Filters];
@@ -86,10 +85,9 @@ const Tasks = () => {
     });
 
     setFilters(updatedFilters);
-    fetchTasks(updatedFilters); // Re-fetch tasks with new filters
+    fetchTasks(updatedFilters); 
   };
 
-  // Handle adding a new task
   const handleIsOpen = () => {
     setCurrentTask(null);
     setIsFormOpen(!isFormOpen);

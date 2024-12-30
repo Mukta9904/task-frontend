@@ -17,7 +17,7 @@ const LoginPage = () => {
          router.push("/dashboard");
         }
     } catch (error) {
-      console.error("Login failed");
+      console.error("Login failed", error);
     }
   };
 
@@ -40,7 +40,9 @@ const LoginPage = () => {
         <Spacer y={1} />
         <Button type="submit">Login</Button>
         <Spacer y={0.5} />
-        <a href="/signup" className="text-blue-500">Don't have an account? Sign up</a>
+        <p>Don&apos;t have an account?  
+        <a href="/signup" className="text-blue-500"> Sign up</a>
+        </p>
       </form>
     </div>
   );

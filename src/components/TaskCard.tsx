@@ -3,15 +3,14 @@
 import { Button, Card, Spacer } from "@nextui-org/react";
 import { useFormContext } from "@/context/formContext";
 import axios from "axios";
-const TaskCard = ({ task, onEdit, onDelete }: any) => {
+
+const TaskCard = ({ task }: any) => {
   const { setIsFormOpen, setCurrentTask,tasks, setTasks} = useFormContext();
   const handleEdit = ()=>{
-    console.log(task);
     setCurrentTask(task)
     setIsFormOpen(true);
   }
   const handleDelete = async ()=>{
-    console.log(task);
     const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/tasks/${task._id}`, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`
