@@ -118,12 +118,12 @@ const Tasks = () => {
               Add Task
             </Button>
             {/* Filters Section */}
-            <div className="flex items-center gap-4 my-4">
+            <div className="flex  items-center gap-4 my-4">
               <Select
                 label="Priority"
                 value={filters?.priority}
                 onChange={(e) => handleFilterChange("priority", e.target.value)}
-                className="text-black"
+                className="text-black w-52"
               >
                 <SelectItem key={1}>1</SelectItem>
                 <SelectItem key={2}>2</SelectItem>
@@ -136,7 +136,7 @@ const Tasks = () => {
                 label="Status"
                 value={filters?.status}
                 onChange={(e) => handleFilterChange("status", e.target.value)}
-                className="text-black"
+                className="text-black w-52"
               >
                 <SelectItem key="pending">Pending</SelectItem>
                 <SelectItem key="finished">Finished</SelectItem>
@@ -145,7 +145,7 @@ const Tasks = () => {
                 label="Sort By"
                 value={filters.sortBy}
                 onChange={(e) => handleFilterChange("sortBy", e.target.value)}
-                className="text-black"
+                className="text-black w-52"
               >
                 <SelectItem key="startTime">Start Time</SelectItem>
                 <SelectItem key="endTime">End Time</SelectItem>
@@ -154,7 +154,7 @@ const Tasks = () => {
                 label="Order"
                 value={filters.order}
                 onChange={(e) => handleFilterChange("order", e.target.value)}
-                className="text-black"
+                className="text-black w-52"
               >
                 <SelectItem key="asc">Ascending</SelectItem>
                 <SelectItem key="desc">Descending</SelectItem>
