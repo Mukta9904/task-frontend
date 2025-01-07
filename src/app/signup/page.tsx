@@ -46,7 +46,6 @@ const SignupPage = () => {
         <h1 className="text-2xl font-bold mb-4">Signup</h1>
         <Input
           className="max-w-xs"
-          defaultValue="example@mail.com"
           errorMessage={errors?.email?.message?.toString()}
           isInvalid={errors?.email ? true : false}
           {...register("email", { required: "Email is required" })}
@@ -57,7 +56,6 @@ const SignupPage = () => {
         <Spacer y={1} />
         <Input
           className="max-w-xs"
-          defaultValue="password"
           errorMessage="Please enter a valid password"
           isInvalid={errors?.password ? true : false}
           {...register("password", { required: "Password is required" })}
